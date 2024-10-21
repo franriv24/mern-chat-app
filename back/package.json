@@ -1,0 +1,19 @@
+{
+  "name": "chat-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@hapi/hapi": "^21.3.10",
+    "@hapi/jwt": "^3.2.0",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.7.2",
+    "redis": "^4.7.0",
+    "socket.io": "^4.8.0"
+  }
+}
