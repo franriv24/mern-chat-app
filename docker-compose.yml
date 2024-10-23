@@ -1,0 +1,61 @@
+services:
+  # Backend service
+  backend:
+    build: ./back
+    container_name: chat-app-api
+    ports:
+      - "5000:5000"  # Expose backend on port 5000
+    environment:
+      MONGO_URI: mongodb://mongo:27017/chat-app  # MongoDB connection
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: "your_jwt_secret"
+      NODE_ENV: development
+    volumes:
+      - ./back:/usr/src/app
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - chat-app-network
+
+  # Frontend service
+  # frontend:
+  #   build: ./front
+  #   container_name: chat-app-front
+  #   ports:
+  #     - "3000:3000"  # Expose frontend on port 3000
+  #   environment:
+  #     VITE_BACKEND_URL: http://backend:5000  # Backend API URL
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - chat-app-network
+
+  # MongoDB service
+  mongo:
+    image: mongo:latest
+    container_name: mongo-service
+    ports:
+      - "27017:27017"  # Expose MongoDB port
+    networks:
+      - chat-app-network
+    volumes:
+      - mongo-data:/data/db
+
+  # Redis service
+  redis:
+    image: redis:latest
+    container_name: redis-service
+    ports:
+      - "6379:6379"  # Expose Redis port
+    networks:
+      - chat-app-network
+
+networks:
+  chat-app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
