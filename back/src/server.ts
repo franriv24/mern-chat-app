@@ -2,23 +2,11 @@ import dotenv from 'dotenv';
 import Hapi from '@hapi/hapi';
 import { registerJwt } from './auth.js';
 import { registerRoutes } from './routes.js';
-import mongoose from 'mongoose';
 import { connectRedis } from './redis.js';
+import { connectDb } from './db.js';
 
 // Load environment variables
 dotenv.config();
-
-const MONGO_URI = process.env.MONGO_URI ?? '';
-
-// Connect to MongoDB
-const connectDb = async () => {
-  try {
-    await mongoose.connect(MONGO_URI);
-    console.log('Connected to MongoDB');
-  } catch (err) {
-    console.error('MongoDB connection error', err);
-  }
-};
 
 // Create Hapi server
 const init = async () => {
